@@ -1,22 +1,32 @@
 {
   "$schema": "node_modules/wrangler/config-schema.json",
   "name": "chefmindbot-cooking-agent-telebot",
-  "main": "worker.js", 
+  "main": "worker.js",
   "compatibility_date": "2024-10-30",
-  "observability": {
-    "enabled": true
-  },
   "compatibility_flags": [
     "nodejs_compat"
   ],
+  "observability": {
+    "enabled": true
+  },
   /**
-   * Binding AI agar env.AI bisa diakses di dalam worker.js
+   * Binding AI: Mengizinkan akses ke Cloudflare Workers AI via env.AI
    */
   "ai": {
     "binding": "AI"
   },
   /**
-   * Smart Placement diaktifkan untuk optimasi latensi
+   * Environment Variables (Bukan Rahasia)
+   * Catatan: Untuk Token Telegram, sangat disarankan menggunakan 'wrangler secret put'
+   * agar tidak terekspos di kode. Jika ingin ditaruh di sini, gunakan blok vars:
+   */
+  "vars": {
+    "NODE_VERSION": "20"
+    // "TELEGRAM_TOKEN": "Isi_Token_Hanya_Jika_Repo_Private"
+  },
+  /**
+   * Smart Placement: Memindahkan eksekusi worker lebih dekat ke 
+   * resource (seperti API AI atau database) untuk mengurangi latensi.
    */
   "placement": {
     "mode": "smart"
